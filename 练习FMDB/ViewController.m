@@ -17,20 +17,22 @@
 #import "ViewController.h"
 #import "fmdb/FMDB.h"
 @interface ViewController ()
-{
 
+{
     NSString *database_path;
     FMDatabase *db;
 }
+
 @property (weak, nonatomic) IBOutlet UITextField *TF;
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     
-    [super viewDidLoad];
     
+    [super viewDidLoad];
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doccuments = [paths firstObject];
@@ -39,7 +41,6 @@
     NSLog(@"%@",database_path);
 
 }
-
 
 
 //FMDB存数据
@@ -55,9 +56,7 @@
             NSLog(@"创建数据库成功");
         }
         [db close];
-        
     }
-    
     
     //添加数据
     if ([db open]) {
@@ -89,10 +88,8 @@
 }
 
 
-
-
-
 - (IBAction)FMDBSaveDic:(id)sender {
+    
     
     //1.创建表
     if ([db open]) {
@@ -111,6 +108,7 @@
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:per options:NSJSONWritingPrettyPrinted error:&err];
     NSString *jsonStr = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
+    
     //2.插入数据
     if ([db open]) {
     NSString *insterSqlite2 = [NSString stringWithFormat:@"INSERT INTO '%@'('%@') VALUES ('%@')",@"dicInfor",@"myDic",jsonStr];
@@ -121,6 +119,7 @@
             NSLog(@"插入成功");
         }
     }
+    
     
     //3.查询
     if ([db open]) {
@@ -133,14 +132,9 @@
             
             NSDictionary *resultDic = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
             
-            
             NSLog(@"查询=%@",resultDic);
         }
-        
     }
-    
-    
-    
 }
 
 
